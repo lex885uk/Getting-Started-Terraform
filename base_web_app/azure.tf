@@ -15,41 +15,41 @@ provider "azurerm" {
 }
 # Create a resource group
 resource "azurerm_resource_group" "GSWTF" {
-  name     = "globo-app-resource-Group"
-  location = "UK South"
+  name     = var.resource_group_name
+  location = var.azure_location
+
+  tags = local.common_tags
 }
 resource "azurerm_windows_virtual_machine" "GSWTF" {
-  name                     = "globo-app-vm"
+  name                     = var.azure_vm.name
   resource_group_name      = azurerm_resource_group.GSWTF.name
   location                 = azurerm_resource_group.GSWTF.location
-  size                     = "Standard_DS1_v2"
-  admin_username           = "gswtfadmin"
-  admin_password           = "Password1234!"
+  size                     = var.azure_vm.size
+  admin_username           = var.azure_vm.admin_username
+  admin_password           = var.azure_vm.admin_password
   network_interface_ids    = [azurerm_network_interface.GSWTF.id]
-  computer_name            = "globo-app-vm"
+  computer_name            = var.azure_vm.computer_name
   enable_automatic_updates = true
   provision_vm_agent       = true
   source_image_reference {
-    publisher = "MicrosoftWindowsServer"
-    offer     = "WindowsServer"
-    sku       = "2019-Datacenter"
-    version   = "latest"
+    publisher = var.source_image.publisher
+    offer     = var.source_image.offer
+    sku       = var.source_image.sku
+    version   = var.source_image.version
   }
   os_disk {
-    name                 = "globo-app-osdisk"
-    caching              = "ReadWrite"
-    storage_account_type = "Standard_LRS"
-  }
-  tags = {
-    environment = "gswtf"
+    name                 = var.os_disk.name
+    caching              = var.os_disk.caching
+    storage_account_type = var.os_disk.storage_account_type
+
   }
 }
 resource "azurerm_virtual_machine_extension" "vm_extension_install_iis" {
-  name                       = "vm_extension_install_iis"
+  name                       = var.vm_extension.name
   virtual_machine_id         = azurerm_windows_virtual_machine.GSWTF.id
-  publisher                  = "Microsoft.Compute"
-  type                       = "CustomScriptExtension"
-  type_handler_version       = "1.8"
+  publisher                  = var.vm_extension.publisher
+  type                       = var.vm_extension.type
+  type_handler_version       = var.vm_extension.type_handler_version
   auto_upgrade_minor_version = true
 
   settings = <<SETTINGS
@@ -57,22 +57,24 @@ resource "azurerm_virtual_machine_extension" "vm_extension_install_iis" {
         "commandToExecute": "powershell -ExecutionPolicy Unrestricted Install-WindowsFeature -Name Web-Server -IncludeAllSubFeature -IncludeManagementTools"
     }
 SETTINGS
+  tags     = local.common_tags
 }
 resource "azurerm_network_interface" "GSWTF" {
-  name                = "globo-app-nic"
+  name                = var.network_interface.name
   location            = azurerm_resource_group.GSWTF.location
   resource_group_name = azurerm_resource_group.GSWTF.name
 
   ip_configuration {
-    name                          = "globo-app-nic-configuration"
+    name                          = var.ip_configuration.name
     subnet_id                     = azurerm_subnet.GSWTF.id
-    private_ip_address_allocation = "Dynamic"
+    private_ip_address_allocation = var.ip_configuration.private_ip_address_allocation
     public_ip_address_id          = azurerm_public_ip.GSWTF.id
   }
+  tags = local.common_tags
 }
 resource "azurerm_public_ip" "GSWTF" {
-  name                = "globo-app-public-ip"
+  name                = var.public_ip.name
   resource_group_name = azurerm_resource_group.GSWTF.name
   location            = azurerm_resource_group.GSWTF.location
-  allocation_method   = "Dynamic"
+  allocation_method   = var.public_ip.allocation_method
 }

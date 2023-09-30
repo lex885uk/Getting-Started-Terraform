@@ -83,12 +83,12 @@ variable "virtual_network_address_space" {
 
 variable "subnet_name" {
   type    = string
-  default = "globo-app-snet"
+  default = "globo-app-subnet"
 }
 
 variable "subnet_address_prefixes" {
   type    = string
-  default = "10.1.0.0/16"
+  default = "10.0.0.0/24"
 }
 
 variable "route_table" {
@@ -135,3 +135,38 @@ variable "route_local" {
     next_hop_type  = "VnetLocal"
   }
 }
+
+# variable "bastion_name" {
+#   type    = string
+#   default = "globo-app-vnet-bastion"
+# }
+
+# variable "bastion_ip_configuration_name" {
+#   type    = string
+#   default = "globo-app-bastion-ip-configuration"
+# }
+
+# variable "bastion_private_ip_address_allocation" {
+#   type    = string
+#   default = "Dynamic"
+# }
+
+# variable "bastion_subnet_name" {
+#   type    = string
+#   default = "AzureBastionSubnet"
+# }
+
+# variable "bastion_subnet_address_prefixes" {
+#   type    = string
+#   default = "10.0.1.0/26"
+
+# }
+# variable "bastion_public_ip_name" {
+#   type    = string
+#   default = "globo-app-vnet-ip"
+# }
+
+# variable "bastion_public_ip_allocation_method" {
+#   type    = string
+#   default = "Static"
+# }

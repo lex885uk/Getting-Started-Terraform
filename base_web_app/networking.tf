@@ -70,18 +70,19 @@ resource "azurerm_subnet_network_security_group_association" "gswtf-nsg" {
   depends_on = [azurerm_network_security_group.gswtf-nsg, azurerm_subnet.gswtf]
 }
 
-# resource "azurerm_subnet" "bastion" {
-#   name                 = var.bastion_subnet_name
-#   resource_group_name  = azurerm_resource_group.gswtf.name
-#   virtual_network_name = azurerm_virtual_network.gswtf.name
-#   address_prefixes     = [var.bastion_subnet_address_prefixes]
+resource "azurerm_subnet" "bastion" {
+  name                 = var.bastion_subnet_name
+  resource_group_name  = azurerm_resource_group.gswtf.name
+  virtual_network_name = azurerm_virtual_network.gswtf.name
+  address_prefixes     = [var.bastion_subnet_address_prefixes]
 
-#   depends_on = [azurerm_virtual_network.gswtf]
+  depends_on = [azurerm_virtual_network.gswtf]
 
-# }
-# resource "azurerm_public_ip" "bastion" {
-#   name                = var.bastion_public_ip_name
-#   location            = azurerm_resource_group.gswtf.location
-#   resource_group_name = azurerm_resource_group.gswtf.name
-#   allocation_method   = var.bastion_public_ip_allocation_method
-# }
+}
+resource "azurerm_public_ip" "bastion" {
+  name                = var.bastion_public_ip_name
+  location            = azurerm_resource_group.gswtf.location
+  resource_group_name = azurerm_resource_group.gswtf.name
+  allocation_method   = var.bastion_public_ip_allocation_method
+  sku                 = var.bastion_public_ip_sku
+}

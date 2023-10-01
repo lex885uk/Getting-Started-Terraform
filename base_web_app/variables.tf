@@ -12,7 +12,7 @@ variable "azure_vm" {
   type = map(string)
   default = {
     name           = "globo-app-vm"
-    size           = "Standard_DS1_v2"
+    size           = "Standard_D2S_v3"
     admin_username = "gswtfadmin"
     admin_password = "Password1234!"
     computer_name  = "globo-app-vm"
@@ -24,7 +24,7 @@ variable "source_image" {
   default = {
     publisher = "MicrosoftWindowsServer"
     offer     = "WindowsServer"
-    sku       = "2019-Datacenter"
+    sku       = "2022-Datacenter"
     version   = "latest"
   }
 }
@@ -136,37 +136,42 @@ variable "route_local" {
   }
 }
 
-# variable "bastion_name" {
-#   type    = string
-#   default = "globo-app-vnet-bastion"
-# }
+variable "bastion_name" {
+  type    = string
+  default = "globo-app-vnet-bastion"
+}
 
-# variable "bastion_ip_configuration_name" {
-#   type    = string
-#   default = "globo-app-bastion-ip-configuration"
-# }
+variable "bastion_ip_configuration_name" {
+  type    = string
+  default = "globo-app-bastion-ip-configuration"
+}
 
-# variable "bastion_private_ip_address_allocation" {
-#   type    = string
-#   default = "Dynamic"
-# }
+variable "bastion_private_ip_address_allocation" {
+  type    = string
+  default = "Dynamic"
+}
 
-# variable "bastion_subnet_name" {
-#   type    = string
-#   default = "AzureBastionSubnet"
-# }
+variable "bastion_subnet_name" {
+  type    = string
+  default = "AzureBastionSubnet"
+}
 
-# variable "bastion_subnet_address_prefixes" {
-#   type    = string
-#   default = "10.0.1.0/26"
+variable "bastion_subnet_address_prefixes" {
+  type    = string
+  default = "10.0.1.0/26"
 
-# }
-# variable "bastion_public_ip_name" {
-#   type    = string
-#   default = "globo-app-vnet-ip"
-# }
+}
+variable "bastion_public_ip_name" {
+  type    = string
+  default = "globo-app-vnet-ip"
+}
 
-# variable "bastion_public_ip_allocation_method" {
-#   type    = string
-#   default = "Static"
-# }
+variable "bastion_public_ip_allocation_method" {
+  type    = string
+  default = "Static"
+}
+
+variable "bastion_public_ip_sku" {
+  type    = string
+  default = "Standard"
+}

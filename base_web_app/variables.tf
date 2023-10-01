@@ -12,7 +12,7 @@ variable "azure_vm" {
   type = map(string)
   default = {
     name           = "globo-app-vm"
-    size           = "Standard_D2S_v3"
+    size           = "Standard_DS1_v2"
     admin_username = "gswtfadmin"
     admin_password = "Password1234!"
     computer_name  = "globo-app-vm"
@@ -24,7 +24,7 @@ variable "source_image" {
   default = {
     publisher = "MicrosoftWindowsServer"
     offer     = "WindowsServer"
-    sku       = "2022-Datacenter"
+    sku       = "2019-Datacenter"
     version   = "latest"
   }
 }

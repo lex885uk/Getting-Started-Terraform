@@ -41,8 +41,8 @@ resource "azurerm_windows_virtual_machine" "gswtf" {
     name                 = var.os_disk.name
     caching              = var.os_disk.caching
     storage_account_type = var.os_disk.storage_account_type
-
   }
+
   tags       = local.common_tags
   depends_on = [azurerm_network_interface.gswtf]
 }
@@ -59,8 +59,8 @@ resource "azurerm_virtual_machine_extension" "vm_extension_install_iis" {
         "commandToExecute": "powershell -ExecutionPolicy Unrestricted Install-WindowsFeature -Name Web-Server -IncludeAllSubFeature -IncludeManagementTools"
     }
 SETTINGS
-  tags     = local.common_tags
 
+  tags     = local.common_tags
   depends_on = [azurerm_windows_virtual_machine.gswtf]
 }
 resource "azurerm_network_interface" "gswtf" {

@@ -84,18 +84,19 @@ resource "azurerm_public_ip" "gswtf" {
   allocation_method   = var.public_ip.allocation_method
 }
 
-resource "azurerm_virtual_machine_extension" "vm_extension_enable_aad" {
-  name                       = "vm_extension_enable_aad"
-  virtual_machine_id         = azurerm_windows_virtual_machine.gswtf.id
-  publisher                  = "Microsoft.Azure.ActiveDirectory"
-  type                       = "AADLoginForWindows"
-  type_handler_version       = "1.0"
-  auto_upgrade_minor_version = true
+# resource "azurerm_virtual_machine_extension" "vm_extension_enable_aad" {
+#   name                       = "vm_extension_enable_aad"
+#   virtual_machine_id         = azurerm_windows_virtual_machine.gswtf.id
+#   publisher                  = "Microsoft.Azure.ActiveDirectory"
+#   type                       = "AADLoginForWindows"
+#   type_handler_version       = "1.0"
+#   auto_upgrade_minor_version = true
 
-  settings = <<SETTINGS
-    {
-        "TenantID": "7aa8c601-0c14-4b9d-9818-9d4d0baf1ab1"
-    }
+#   settings = <<SETTINGS
+#     {
+#         "TenantID": "7aa8c601-0c14-4b9d-9818-9d4d0baf1ab1"
+#          "mdmId": "MDM_ID"
+#     }
 
-SETTINGS
-}
+# SETTINGS
+# }

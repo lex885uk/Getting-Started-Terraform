@@ -60,7 +60,7 @@ resource "azurerm_virtual_machine_extension" "vm_extension_install_iis" {
     }
 SETTINGS
 
-  tags     = local.common_tags
+  tags       = local.common_tags
   depends_on = [azurerm_windows_virtual_machine.gswtf]
 }
 resource "azurerm_network_interface" "gswtf" {
